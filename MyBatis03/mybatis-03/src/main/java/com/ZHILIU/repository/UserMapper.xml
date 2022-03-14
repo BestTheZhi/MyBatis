@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace=绑定一个对应的repository/Dao/Mapper接口 -->
+<mapper namespace="com.ZHILIU.repository.UserMapper">
+
+    <!--起别名 -->
+<!--    <select id="getUserById" parameterType="long" resultType="User">-->
+<!--        select id,name,pwd as password from user where id = #{id};-->
+<!--    </select>-->
+
+    <!-- 结果集映射 -->
+    <resultMap id="userMap" type="User">
+        <!-- column为数据库表中的字段 property为实体类中的属性 -->
+            <!-- 相同不需要映射 -->
+<!--        <result column="id" property="id"/>-->
+<!--        <result column="name" property="name"/>-->
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <select id="getUserById" resultMap="userMap">
+        select * from user where id = #{id};
+    </select>
+
+</mapper>

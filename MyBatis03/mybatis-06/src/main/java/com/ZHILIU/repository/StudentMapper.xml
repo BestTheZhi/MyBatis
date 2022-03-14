@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ZHILIU.repository.StudentMapper">
+
+    <!--  直接两张表联合查询
+    select s.id as sid,s.name as sname,t.id as tid,t.name as tname
+    from student s,teacher t where s.tid = t.id;
+      -->
+    <select id="getStudentList1" resultMap="studentList1">
+        select s.id as sid,s.name as sname,t.id as tid,t.name as tname
+        from student s,teacher t
+        where s.tid = t.id;
+    </select>
+    <resultMap id="studentList1" type="Student">
+        <!-- id是主键 也可换成result标签-->
+        <id column="sid" property="id"/>
+        <!-- column是查询结果中的列名,property是Java Bean中属性  -->
+        <result column="sname" property="name"/>
+        <!-- 复杂的属性，对象用association 集合用collection
+             javaType="" 指定属性的类型
+             ofType="" 集合中的泛型信息     -->
+        <association property="teacher" javaType="Teacher">
+            <id column="tid" property="id"/>
+            <result column="tname" property="name"/>
+        </association>
+    </resultMap>
+
+    <!--  1.先查出学生信息
+          2.根据查询出来的学生的tid，查询对应的老师
+    -->
+<!--    <select id="getStudentList2" resultMap="studentList2">-->
+<!--        select * from student;-->
+<!--    </select>-->
+<!--    <resultMap id="studentList2" type="Student">-->
+<!--        <result property="id" column="id"/>-->
+<!--        <result property="name" column="name"/>-->
+<!--        &lt;!&ndash;  @Select("select * from teacher where id = #{tid}")-->
+<!--              Teacher getTeacherById(@Param("tid") long id);        &ndash;&gt;-->
+<!--        <association property="teacher" column="tid" javaType="Teacher" select="getTeacherById"/>-->
+<!--    </resultMap>-->
+
+    <!--如上写法是不行的
+    Exception: Mapped Statements collection does not contain value for com.ZHILIU.repository.StudentMapper.getTeacherById
+    getTeacherById  只能写在它自己的xml文件中 如下：
+    -->
+
+    <select id="getStudentList2" resultMap="studentList2">
+        select * from student;
+    </select>
+    <resultMap id="studentList2" type="Student">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="teacher" column="tid" javaType="Teacher" select="getTeacherById"/>
+    </resultMap>
+
+    <select id="getTeacherById" resultType="Teacher">
+        select * from teacher where id = #{id};
+    </select>
+
+
+</mapper>

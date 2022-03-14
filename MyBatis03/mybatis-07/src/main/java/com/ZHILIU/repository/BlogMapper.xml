@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ZHILIU.repository.BlogMapper">
+
+<!--    <select id="getBlogIF" resultType="Blog">-->
+<!--        select * from blog where 1=1-->
+<!--        &lt;!&ndash; 没有1=1的话 where后面直接跟and 会报错-->
+<!--             又或者后面所有条件都不成立 where后面什么都没有-->
+<!--             所以要配合where标签使用  &ndash;&gt;-->
+<!--        <if test="author != null">-->
+<!--            and author like "%"#{author}"%"-->
+<!--        </if>-->
+<!--        <if test="title != null">-->
+<!--            and title = #{title}-->
+<!--        </if>-->
+<!--    </select>-->
+    
+    <sql id="if-author-title">
+        <if test="author != null">
+            author like "%"#{author}"%"
+        </if>
+        <if test="title != null">
+            and title = #{title}
+        </if>
+    </sql>
+
+    <select id="getBlogIF" resultType="Blog">
+        select * from blog
+        <where>
+            <include refid="if-author-title"></include>
+        </where>
+    </select>
+
+    <select id="getBlogChoose" resultType="Blog">
+        select * from blog where
+        <choose>
+            <when test="title != null">
+                title = #{title}
+            </when>
+            <when test="author != null">
+                uthor = #{author}
+            </when>
+            <otherwise>
+                views > 2000
+            </otherwise>
+        </choose>
+    </select>
+
+    <update id="updateBlogSet"  parameterType="map">
+        update blog
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="author != null">
+                author = #{author},
+            </if>
+            <if test="views != null">
+                view = #{view};
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+    <!--  select * from blog where id in (1,2,3)  -->
+    <select id="getBlogForeach" resultType="Blog">
+        select * from blog
+        <where>
+            <foreach collection="ids" item="id" open="id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+
+</mapper>

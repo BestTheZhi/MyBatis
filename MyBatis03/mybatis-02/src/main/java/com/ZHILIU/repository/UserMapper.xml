@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace=绑定一个对应的repository/Dao/Mapper接口 -->
+<mapper namespace="com.ZHILIU.repository.UserMapper">
+    <!-- id 绑定repository 中的方法 -->
+    <!-- resultType 为返回实体类的全类名-->
+    <select id="getUserList" resultType="user">
+        select * from user;
+    </select>
+
+    <select id="getUserById" parameterType="long" resultType="com.ZHILIU.entity.User">
+        select * from user where id = #{id};
+    </select>
+
+
+    <!-- insert update delete 返回值都是int类型  就不用写-->
+    <insert id="addUser" parameterType="com.ZHILIU.entity.User">
+        insert into user(id,name,pwd) values(#{id},#{name},#{pwd});
+    </insert>
+
+    <update id="updateUser" parameterType="com.ZHILIU.entity.User">
+        update user set name = #{name}, pwd = #{pwd} where id = #{id};
+    </update>
+
+    <delete id="deleteById" parameterType="long" >
+        delete from user where id = #{id};
+    </delete>
+
+</mapper>
