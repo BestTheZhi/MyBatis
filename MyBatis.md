@@ -375,7 +375,7 @@ public interface UserRepository {
 
 
 
-#### 1、select   查询语句
+### 1、select   查询语句
 
 ```xml
 <select id="getUserList" resultType="com.ZHILIU.entity.User">
@@ -387,7 +387,7 @@ public interface UserRepository {
 </select>
 ```
 
-#### 2、insert  添加语句
+### 2、insert  添加语句
 
 ```xml
 <!-- insert update delete 返回值都是int类型  就不用写-->
@@ -396,7 +396,7 @@ public interface UserRepository {
 </insert>
 ```
 
-#### 3、update 修改语句
+### 3、update 修改语句
 
 ```xml
 <update id="updateUser" parameterType="com.ZHILIU.entity.User">
@@ -404,7 +404,7 @@ public interface UserRepository {
 </update>
 ```
 
-#### 4、delete  删除语句
+### 4、delete  删除语句
 
 ```xml
 <delete id="deleteById" parameterType="long" >
@@ -432,7 +432,7 @@ public interface UserRepository {
 
 
 
-#### 5、"万能Map"
+### 5、"万能Map"
 
 >Map 的 别名为 map ,  paramType="map" 
 
@@ -477,7 +477,7 @@ Map传递参数，直接在sql中取出key值。
 
 
 
-#### 6、模糊查询
+### 6、模糊查询
 
 ```java
 //模糊查询
