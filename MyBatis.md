@@ -1,6 +1,6 @@
 # MyBatis
 
-![1](https://gitee.com/bestthezhi/images/raw/master/FrameWork/1.png)
+![1](https://images.weserv.nl/?url=raw.githubusercontent.com/BestTheZhi/images/master/FrameWork/1.png)
 
 ## 一、简介
 
