@@ -1591,7 +1591,7 @@ mybatis-config.xml
 
 BolgMapper.xml
 
-```xml
+```java
 public interface BlogMapper {
 
     @Insert("insert into blog (title,author,create_time,views)" +
